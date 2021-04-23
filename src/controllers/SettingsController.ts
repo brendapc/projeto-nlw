@@ -7,8 +7,11 @@ export class SettingsController {
 
     const settingsService = new SettingsService();
 
-    const settings = await settingsService.create({ chat, username });
-
-    return response.json(settings);
+    try {
+      const settings = await settingsService.create({ chat, username });
+      return response.json(settings);
+    } catch (err) {
+      return response.json({ error: err.message }).status(400);
+    }
   }
 }
