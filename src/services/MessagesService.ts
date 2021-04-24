@@ -7,7 +7,7 @@ interface IMessageCreate {
   userId: string;
 }
 
-export class MessageService {
+export class MessagesService {
   async create({ adminId, text, userId }: IMessageCreate) {
     const messagesRepository = getCustomRepository(MessagesRepository);
 
@@ -24,5 +24,12 @@ export class MessageService {
 
   async listByUser(userId: string) {
     const messagesRepository = getCustomRepository(MessagesRepository);
+
+    const list = await messagesRepository.find({
+      where: { userId },
+      relations: ["user"],
+    });
+
+    return list;
   }
 }
