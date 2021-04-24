@@ -1,5 +1,5 @@
 import { getCustomRepository } from "typeorm";
-import { MessageRepository } from "../repositories/MessagesRepository";
+import { MessagesRepository } from "../repositories/MessagesRepository";
 
 interface IMessageCreate {
   adminId?: string;
@@ -9,7 +9,7 @@ interface IMessageCreate {
 
 export class MessageService {
   async create({ adminId, text, userId }: IMessageCreate) {
-    const messagesRepository = getCustomRepository(MessageRepository);
+    const messagesRepository = getCustomRepository(MessagesRepository);
 
     const message = messagesRepository.create({
       adminId,
@@ -20,5 +20,9 @@ export class MessageService {
     await messagesRepository.save(message);
 
     return message;
+  }
+
+  async listByUser(userId: string) {
+    const messagesRepository = getCustomRepository(MessagesRepository);
   }
 }
