@@ -14,7 +14,7 @@ export class ConnectionsService {
   constructor() {
     this._connectionsRepository = getCustomRepository(ConnectionsRepository);
   }
-  async createImageBitmap({
+  async create({
     socketId,
     userId,
     adminId,
