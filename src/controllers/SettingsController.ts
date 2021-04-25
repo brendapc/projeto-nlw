@@ -1,4 +1,4 @@
-import { Request, Response } from "express";
+import { request, Request, Response } from "express";
 import { SettingsService } from "./../services/SettingsService";
 
 export class SettingsController {
@@ -13,5 +13,24 @@ export class SettingsController {
     } catch (err) {
       return response.json({ error: err.message }).status(400);
     }
+  }
+
+  async findByUsername(request: Request, response: Response) {
+    const { username } = request.params;
+
+    const settingsService = new SettingsService();
+    const settings = await settingsService.findByUsername(username);
+    return response.json(settings);
+  }
+
+  async update(request: Request, response: Response) {
+    const { username } = request.params;
+    const { chat } = request.body;
+
+    const settingsService = new SettingsService();
+
+    const settings = await settingsService.update(username, chat);
+
+    return response.json(settings);
   }
 }
